@@ -1,0 +1,11 @@
+#!/bin/txr
+@(bind col2-counts @(hash))
+@(collect)
+@col1 @col2
+@ (filter :toint col1 col2)
+@ (do (hash-update-1 col2-counts col2 (op + @1 1) 0))
+@(end)
+@(do (let ((col1 (sort col1))
+           (col2 (sort col2)))
+       (put-line `Part1: @(sum (mapcar (op abs (- @1 @2)) col1 col2))`)
+       (put-line `Part2: @(sum-each ((i col1)) (* i (gethash col2-counts i 0)))`)))
